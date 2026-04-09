@@ -12,5 +12,8 @@ class Category extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    protected $fillable = ['id', 'name', 'parentid', 'catorder'];
+    protected $fillable = [
+    'id', 'name', 'parentid', 'image', 'texttip',
+    'catshowname', 'catorder', 'BUTTONCOLOR', 'TEXTCOLOR'
+];
 }

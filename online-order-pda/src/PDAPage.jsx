@@ -1,4 +1,4 @@
-// src/App.jsx
+// src/PDAPage.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -27,7 +27,7 @@ const getCategoryIcon = (category) => {
   return '🍽️';
 };
 
-function App() {
+function PDAPage() {
   // State
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -566,4 +566,4 @@ const ProductCard = ({ product, onAdd }) => (
   </div>
 );
 
-export default App;
+export default PDAPage;

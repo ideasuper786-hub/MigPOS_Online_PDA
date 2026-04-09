@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController  // <-- no "extends Controller"
 {
     public function byCategory($categoryId)
     {
-        // Force a simple, unfiltered query
-        $products = Product::where('category', $categoryId)
-            ->get(['id', 'name', 'pricesell', 'texttip']);
-
-        // If still empty, try with LIKE (in case of hidden characters)
-        if ($products->isEmpty()) {
-            $products = Product::where('category', 'LIKE', '%' . $categoryId . '%')
-                ->get(['id', 'name', 'pricesell', 'texttip']);
-        }
-
-        // Log for debugging
-        \Log::info("Category $categoryId returned " . $products->count() . " products");
+        $products = DB::select("
+            SELECT id, name, pricesell, texttip
+            FROM products
+            WHERE category = ?
+        ", [$categoryId]);
 
         return response()->json($products);
     }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use Illuminate\Support\Facades\Route;
 
+// Public API for PDA (customer ordering)
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('products/category/{categoryId}', [ProductController::class, 'byCategory']);
 Route::post('order', [OrderController::class, 'store']);
