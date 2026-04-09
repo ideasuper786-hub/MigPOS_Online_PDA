@@ -1,12 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\OrderController;
 
-Route::get('/db-test', function () {
+// API routes - temporary fix
+Route::prefix('api')->group(function () {
+    Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('products/category/{categoryId}', [ProductController::class, 'byCategory']);
+    Route::post('order', [OrderController::class, 'store']);
+});
+
+Route::get('test', function () {
+    return 'Laravel is working!';
+});
+
+Route::get('db-check', function () {
     try {
-        $tables = DB::select('SHOW TABLES');
-        return response()->json(['success' => true, 'tables' => $tables]);
+        $categories = DB::table('categories')->get();
+        return response()->json(['count' => $categories->count(), 'data' => $categories]);
     } catch (\Exception $e) {
-        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        return $e->getMessage();
     }
 });
+
+
+// ... rest of your web routes
