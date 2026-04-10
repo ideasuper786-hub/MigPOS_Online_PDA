@@ -23,12 +23,12 @@ Route::get('db-check', function () {
     }
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('categories', [App\Http\Controllers\Admin\CategoryController::class, 'index']);
-    Route::get('categories-tree', [App\Http\Controllers\Admin\CategoryController::class, 'tree']);
-    Route::post('categories', [App\Http\Controllers\Admin\CategoryController::class, 'store']);
-    Route::put('categories/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'update']);
-    Route::delete('categories/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy']);
-});
+// Handle preflight OPTIONS requests for all admin routes
+Route::options('/admin/{any}', function () {
+    return response('', 200)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+})->where('any', '.*');
 
 // ... rest of your web routes
