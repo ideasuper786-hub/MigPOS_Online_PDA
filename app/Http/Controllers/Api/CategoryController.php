@@ -10,13 +10,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        try {
-            $categories = Category::select('id', 'name')
-                ->orderBy('catorder')
-                ->get();
-            return response()->json($categories);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        // Only select id and name – avoid the image BLOB
+        $categories = Category::orderBy('catorder')->get(['id', 'name']);
+        return response()->json($categories);
     }
 }

@@ -1,25 +1,32 @@
 <?php
 
-namespace App\Http\Middleware;
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | Cross-Origin Resource Sharing (CORS) Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure your settings for cross-origin resource sharing
+    | or "CORS". This determines what cross-origin operations may execute
+    | in web browsers. You are free to adjust these settings as needed.
+    |
+    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+    |
+    */
 
-use Closure;
+    'paths' => ['api/*', 'admin/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register'],
 
-class Cors
-{
-    public function handle($request, Closure $next)
-    {
-        if ($request->getMethod() === 'OPTIONS') {
-            return response('', 200)
-                ->header('Access-Control-Allow-Origin', '*')
-                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-                ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-        }
+    'allowed_methods' => ['*'],
 
-        $response = $next($request);
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    'allowed_origins' => ['http://localhost:3000', 'http://127.0.0.1:3000'],
 
-        return $response;
-    }
-}
+    'allowed_origins_patterns' => [],
+
+    'allowed_headers' => ['*'],
+
+    'exposed_headers' => [],
+
+    'max_age' => 0,
+
+    'supports_credentials' => true,
+];
